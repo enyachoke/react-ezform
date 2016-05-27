@@ -62,6 +62,28 @@ const contactFormFields = [
             validate: data => (data.phoneType || -1) > -1,
             message: "Required field"
         }]
+    },{
+        name: "phoneTypes",
+        type: "array",
+        label: { text: "Phone Type *" },
+        control: {
+            tag: "multiselect",
+            multioptions: [
+                { id: 1, text: "Home" },
+                { id: 2, text: "Work" },
+                { id: 3, text: "Cell" },
+                { id: 4, text: "Other" }
+            ]
+        },
+        validators: []
+    },{
+        name: "about",
+        type: "text",
+        label: { text: "About Me *" },
+        control: {
+            tag: "textarea",
+        },
+        validators: []
     }, {
         name: "email",
         type: "string",

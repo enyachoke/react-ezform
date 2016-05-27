@@ -1,5 +1,6 @@
 import React, { PropTypes as t } from 'react';
-
+import 'react-widgets/lib/less/react-widgets.less';
+import Multiselect from 'react-widgets/lib/Multiselect';
 /** For an expression using dot notation, returns the value, or undefined
  * if any objects in the path are null or undefined */
 function val(obj, path) {
@@ -70,7 +71,7 @@ class EZForm extends React.Component {
                 areAllValid = false;
             }
         });
-        
+
         return areAllValid;
     }
 
@@ -94,14 +95,20 @@ class EZForm extends React.Component {
     }
 
     handleOnChange(fieldName, fieldValue, forceValidate = false) {
+        console.log(this.state)
         const field = this.props.fields.find(f => f.name === fieldName);
-
         switch ((field.type || 'string').toLowerCase()) {
             case 'number':
                 //Unary operator converts string to number - better performance than parse
                 //functions or Number constructor and ignores leading zeros.
                 fieldValue = fieldValue * 1;
                 break;
+                case 'array':
+                    //Unary operator converts string to number - better performance than parse
+                    //functions or Number constructor and ignores leading zeros.
+                    fieldValue = fieldValue * 1;
+                    console.log(fieldValue)
+                    break;
             case 'boolean':
                 fieldValue = parseBoolean(fieldValue);
                 break;
@@ -178,7 +185,6 @@ class EZForm extends React.Component {
 
             case 'select':
                 const { options } = field.control;
-
                 return (
                     <select
                         {...attributes}
@@ -190,7 +196,12 @@ class EZForm extends React.Component {
 
                     </select>
                 );
-
+                case 'multiselect':
+                    const { multioptions } = field.control;
+                    return (
+                      <Multiselect  valueField='id' textField="text" data={multioptions}>
+                      </Multiselect>
+                    );
             case 'textarea':
                 return <textarea {...attributes}
                     onBlur={(e) => this.handleOnBlur(field.name, e.target.value)}

@@ -15,8 +15,10 @@ export default class App extends Component {
                 lastName: "",
                 phone: "",
                 phoneType: -1,
+                phoneTypes: [],
                 email: "",
                 confirmEmail: "",
+                about: "",
                 subscribeMe: false
             }
         }
